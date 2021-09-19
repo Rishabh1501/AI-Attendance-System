@@ -5,9 +5,7 @@ import face_recognition
 import numpy as np
 import os
 from datetime import datetime
-import time
 import pandas as pd
-import csv
 
 
 # instatiate flask app
