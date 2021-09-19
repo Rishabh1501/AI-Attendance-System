@@ -12,7 +12,7 @@ import pandas as pd
 app = Flask(__name__, template_folder='./templates')
 
 
-camera = cv2.VideoCapture(1)
+camera = cv2.VideoCapture(0)  # change this if camera not working
 
 
 path = 'images'
@@ -40,6 +40,7 @@ date = datetime.now().date()
 exists = os.path.isfile("Attendance_" + str(date) + ".csv")
 if exists:
     print("File There")
+    
 else:
     date = datetime.now().date()
     x = open("Attendance_" + str(date) + ".csv", 'a+')
@@ -111,7 +112,7 @@ def fcheckout(name, folder_path=None, save_image=True):
 
         else:
             if(df['Check Out'][name] == 1):
-                checkout_status = "You Already Checked Out at" + \
+                checkout_status = "You Already Checked Out at " + \
                     str(df['Check Out Time'][name])
             else:
                 df['Check Out'][name] = 1

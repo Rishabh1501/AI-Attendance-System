@@ -6,3 +6,4 @@ task.txt
 __pycache__
 main.py
 saved_images/
+ngrok.exe

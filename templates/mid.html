@@ -11,6 +11,11 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Attendance</title>
+    <style>
+        body{
+        background-color: #e0dede;}
+        
+    </style>
 </head>
 
 
@@ -20,7 +25,7 @@
             <div class="col-lg-8  offset-lg-2">
                 <h3 class="mt-5 text-center">Live Streaming</h3>
                 <br>
-                <p class="text-center"><img src="{{ url_for('video_feed') }}" height="50%" width="50%"></p>
+                <p class="text-center"><img src="{{ url_for('video_feed') }}" height="50%" width="50%" style="border-radius: 25px"></p>
                 <hr>
                 <p class="text-center"> {{ status }} </p>
                 <form action="{{ url_for('checkin')}}" method="post" onsubmit="ShowLoading()">
