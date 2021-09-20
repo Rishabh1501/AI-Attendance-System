@@ -18,6 +18,8 @@ camera = cv2.VideoCapture(0)  # change this if camera not working
 path = 'images'
 images = []
 known_face_names = []
+date = datetime.now().date()
+attendance_file_path = os.path.join("Attendance", "Attendance_" + str(date) + ".csv")
 myList = os.listdir(path)
 print(myList)
 for cu_img in myList:
@@ -36,31 +38,28 @@ def faceEncodings(images):
     return encodeList
 
 
-date = datetime.now().date()
+
 if "Attendance" not in os.listdir(os.getcwd()):
     os.mkdir("Attendance")
 
-exists = os.path.isfile(os.path.join(
-    "Attendance", "Attendance_" + str(date) + ".csv"))
+exists = os.path.isfile(attendance_file_path)
 if exists:
     print("File There")
 else:
-    date = datetime.now().date()
-    x = open(os.path.join("Attendance", "Attendance_" + str(date) + ".csv"), 'a+')
+    x = open(attendance_file_path, 'a+')
     data = {'Name': [], 'Time': [], 'Date': [],
             'Check In': [], 'Check Out': [], 'Check Out Time': []}
     df = pd.DataFrame(data, columns=[
                       'Name', 'Time', 'Date', 'Check In', 'Check Out', 'Check Out Time'])  # create DataFrame
     df.set_index('Name', inplace=True)
-    df.to_csv(os.path.join("Attendance", "Attendance_" +
-              str(date) + ".csv"), sep=',', header=True)
+    df.to_csv(attendance_file_path, sep=',', header=True)
 
 
 def attendance(name, folder_path=None, save_image=True):
     #ts = time.time()
     date = datetime.now().date()
     #date = datetime.datetime.fromtimestamp(ts).strftime('%d-%m-%Y')
-    with open(os.path.join("Attendance", "Attendance_" + str(date) + ".csv"), 'r+') as f:
+    with open(attendance_file_path, 'r+') as f:
         myDataList = f.readlines()
         nameList = []
         for line in myDataList:
@@ -86,8 +85,7 @@ def attendance(name, folder_path=None, save_image=True):
                 ". Welcome to the Company . Have a Great Day at Work "
             return checkin_status
         else:
-            df = pd.read_csv("Attendance_" + str(date) +
-                             ".csv", index_col='Name')
+            df = pd.read_csv(attendance_file_path, index_col='Name')
             if(df['Check Out'][name] == 1):
                 checkin_status = "You Already Checked Out at" + \
                     str(df['Check Out Time'][name]) + "! See You Tomorrow :) "
@@ -103,9 +101,8 @@ def attendance(name, folder_path=None, save_image=True):
 def fcheckout(name, folder_path=None, save_image=True):
     checkout_status = "OK"
     date = datetime.now().date()
-    df = pd.read_csv("Attendance_" + str(date) + ".csv", index_col='Name')
-    df.head()
-    with open(os.path.join("Attendance", "Attendance_" + str(date) + ".csv"), 'r+') as f:
+    df = pd.read_csv(attendance_file_path, index_col='Name')
+    with open(attendance_file_path, 'r+') as f:
         myDataList = f.readlines()
         nameList = []
         for line in myDataList:
@@ -134,7 +131,7 @@ def fcheckout(name, folder_path=None, save_image=True):
                 checkout_status = "Successfully Checked Out at " + \
                     str(df['Check Out Time'][name])
 
-    df.to_csv("Attendance_" + str(date) + ".csv", sep=',', header=True)
+    df.to_csv(attendance_file_path, sep=',', header=True)
 
     return checkout_status
 
@@ -148,7 +145,6 @@ face_encodings = []
 face_names = []
 process_this_frame = True
 currentname = "U"
-
 
 def gen_frames():
     while True:
@@ -287,7 +283,7 @@ def confirm():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug = True)
 
 camera.release()
 cv2.destroyAllWindows()
