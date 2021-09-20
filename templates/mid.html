@@ -13,12 +13,12 @@
                 <form action="{{ url_for('checkin')}}" method="post" onsubmit="ShowLoading()">
                     <p class="text-center"><button type="submit" class="btn btn-success">Check-In</button></p>
 
-                    <input type="text" id="firstname" name="take" style="display: none;" value="{{ n }}">
+                    <input type="text" id="firstname" name="name" style="display: none;" value="{{ name }}">
                 </form>
                 <form action="{{ url_for('checkout')}}" method="post" onsubmit="ShowLoading()">
 
                     <p class="text-center"><button type="submit" class="btn btn-warning">Check-Out</button></p>
-                    <input type="text" id="firstname" name="take" style="display: none;" value="{{ n }}">
+                    <input type="text" id="firstname" name="name" style="display: none;" value="{{ name }}">
                 </form>
 
             </div>
