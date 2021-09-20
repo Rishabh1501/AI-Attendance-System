@@ -37,26 +37,30 @@ def faceEncodings(images):
 
 
 date = datetime.now().date()
-exists = os.path.isfile("Attendance_" + str(date) + ".csv")
+if "Attendance" not in os.listdir(os.getcwd()):
+    os.mkdir("Attendance")
+
+exists = os.path.isfile(os.path.join(
+    "Attendance", "Attendance_" + str(date) + ".csv"))
 if exists:
     print("File There")
-    
 else:
     date = datetime.now().date()
-    x = open("Attendance_" + str(date) + ".csv", 'a+')
+    x = open(os.path.join("Attendance", "Attendance_" + str(date) + ".csv"), 'a+')
     data = {'Name': [], 'Time': [], 'Date': [],
             'Check In': [], 'Check Out': [], 'Check Out Time': []}
     df = pd.DataFrame(data, columns=[
                       'Name', 'Time', 'Date', 'Check In', 'Check Out', 'Check Out Time'])  # create DataFrame
     df.set_index('Name', inplace=True)
-    df.to_csv("Attendance_" + str(date) + ".csv", sep=',', header=True)
+    df.to_csv(os.path.join("Attendance", "Attendance_" +
+              str(date) + ".csv"), sep=',', header=True)
 
 
 def attendance(name, folder_path=None, save_image=True):
     #ts = time.time()
     date = datetime.now().date()
     #date = datetime.datetime.fromtimestamp(ts).strftime('%d-%m-%Y')
-    with open("Attendance_" + str(date) + ".csv", 'r+') as f:
+    with open(os.path.join("Attendance", "Attendance_" + str(date) + ".csv"), 'r+') as f:
         myDataList = f.readlines()
         nameList = []
         for line in myDataList:
@@ -101,7 +105,7 @@ def fcheckout(name, folder_path=None, save_image=True):
     date = datetime.now().date()
     df = pd.read_csv("Attendance_" + str(date) + ".csv", index_col='Name')
     df.head()
-    with open("Attendance_" + str(date) + ".csv", 'r+') as f:
+    with open(os.path.join("Attendance", "Attendance_" + str(date) + ".csv"), 'r+') as f:
         myDataList = f.readlines()
         nameList = []
         for line in myDataList:
