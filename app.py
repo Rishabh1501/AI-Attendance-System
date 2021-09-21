@@ -18,6 +18,14 @@ preprocessing = Preprocessing()
 with open('config.json') as f:
     config_file = json.load(f)
 
+# making all the folders
+data_import.make_folders(
+    config_file["saved_image_folder"], config_file["attendance_folder_path"],config_file["image_path"])
+
+#creating csv file
+attendance_file_path = data_import.make_csv_file()
+
+#calling important functions
 images, known_face_names = data_import.read_images(
     path=config_file["image_path"])
 known_face_encodings = preprocessing.faceEncodings(images)
@@ -25,15 +33,12 @@ api_functions = API_Functions(
     camera, known_face_names, known_face_encodings, config_file["saved_image_folder"])
 
 
-#global variables
-attendance_file_path = None
 
 
 @app.route('/')
 def index():
     global attendance_file_path
-    attendance_file_path = data_import.make_folders(config_file["saved_image_folder"],
-                                                    config_file["attendance_folder_path"])
+    attendance_file_path = data_import.make_csv_file()
     return render_template('index.html')
 
 
