@@ -14,6 +14,7 @@ class API_Functions:
         self.known_face_encodings = known_face_encodings
         self.img_folder_path = img_folder_path
 
+
     def check_in(self, name, attendance_file_path, save_image=True):
 
         df = pd.read_csv(attendance_file_path, index_col='Name')
@@ -41,6 +42,7 @@ class API_Functions:
                     " ! You can now Checked Out Only :)"
             return checkin_status
 
+
     def check_out(self, name, attendance_file_path, save_image=True):
         df = pd.read_csv(attendance_file_path, index_col='Name')
         if name not in df.index:
@@ -63,6 +65,7 @@ class API_Functions:
 
         return checkout_status
 
+
     def capture_frame(self, name, check_status, save_image=True):
         if self.img_folder_path and save_image:
             success, frame = self.camera.read()
@@ -73,6 +76,7 @@ class API_Functions:
             check = cv2.imwrite(img_path, frame)
             if check:
                 print("Image Saved Successfully")
+
 
     def gen_frames(self):
         while True:
@@ -130,6 +134,7 @@ class API_Functions:
                 frame = buffer.tobytes()
                 yield (b'--frame\r\n'
                        b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
 
     def gen_name(self):
         while True:
