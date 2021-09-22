@@ -79,6 +79,8 @@ def checkout():
 @app.route('/confirm', methods=['POST'])
 def confirm():
     name = api_functions.gen_name()
+    if name == "Unknown": 
+        return render_template('unknown.html', status="Unknown can't check in or check out")
     return render_template('mid.html', status='You are {} , Press Check In Check Out  '.format(name), name=name)
 
 
