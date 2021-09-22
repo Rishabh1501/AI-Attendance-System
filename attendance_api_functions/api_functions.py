@@ -14,7 +14,6 @@ class API_Functions:
         self.known_face_encodings = known_face_encodings
         self.img_folder_path = img_folder_path
 
-
     def check_in(self, name, attendance_file_path, save_image=True):
 
         df = pd.read_csv(attendance_file_path, index_col='Name')
@@ -42,7 +41,6 @@ class API_Functions:
                     " ! You can now Checked Out Only :)"
             return checkin_status
 
-
     def check_out(self, name, attendance_file_path, save_image=True):
         df = pd.read_csv(attendance_file_path, index_col='Name')
         if name not in df.index:
@@ -65,7 +63,6 @@ class API_Functions:
 
         return checkout_status
 
-
     def capture_frame(self, name, check_status, save_image=True):
         if self.img_folder_path and save_image:
             success, frame = self.camera.read()
@@ -76,7 +73,6 @@ class API_Functions:
             check = cv2.imwrite(img_path, frame)
             if check:
                 print("Image Saved Successfully")
-
 
     def gen_frames(self):
         while True:
@@ -100,7 +96,7 @@ class API_Functions:
                 for face_encoding in face_encodings:
                     # See if the face is a match for the known face(s)
                     matches = face_recognition.compare_faces(
-                        self.known_face_encodings, face_encoding)
+                        self.known_face_encodings, face_encoding, tolerance=0.5)
                     name = "Unknown"
                     # Or instead, use the known face with the smallest distance to the new face
                     face_distances = face_recognition.face_distance(
@@ -135,7 +131,6 @@ class API_Functions:
                 yield (b'--frame\r\n'
                        b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-
     def gen_name(self):
         while True:
             success, frame = self.camera.read()  # read the camera frame
@@ -159,7 +154,7 @@ class API_Functions:
                 for face_encoding in face_encodings:
                     # See if the face is a match for the known face(s)
                     matches = face_recognition.compare_faces(
-                        self.known_face_encodings, face_encoding)
+                        self.known_face_encodings, face_encoding, tolerance=0.5)
                     # Or instead, use the known face with the smallest distance to the new face
                     face_distances = face_recognition.face_distance(
                         self.known_face_encodings, face_encoding)

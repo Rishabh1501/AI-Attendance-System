@@ -21,7 +21,7 @@ preprocessing = Preprocessing()
 with open('config.json') as f:
     config_file = json.load(f)
 
-#creating database object
+# creating database object
 database = DatabaseAPI(camera, config_file["mongo_db_connection_url"],
                        config_file["database_name"], config_file["saved_image_folder"])
 
@@ -31,9 +31,9 @@ data_import.make_folders(
     config_file["saved_image_folder"], config_file["attendance_folder_path"], config_file["image_path"])
 
 # creating csv file
-# attendance_file_path = data_import.make_csv_file()
+attendance_file_path = data_import.make_csv_file()
 
-#creating collection
+# creating collection
 database.make_database_collection()
 
 # calling important functions
@@ -44,11 +44,10 @@ api_functions = API_Functions(
     camera, known_face_names, known_face_encodings, config_file["saved_image_folder"])
 
 
-
 @app.route('/')
 def index():
-    # global attendance_file_path
-    # attendance_file_path = data_import.make_csv_file()
+    global attendance_file_path
+    attendance_file_path = data_import.make_csv_file()
     database.make_database_collection()
     return render_template('index.html')
 
@@ -61,25 +60,25 @@ def video_feed():
 @app.route('/checkin', methods=['POST'])
 def checkin():
     name = request.form.get("name")
-    # status = api_functions.check_in(
-    #     name, attendance_file_path, save_image=True)
-    status = database.check_in(name,save_image=True)
+    _ = api_functions.check_in(
+        name, attendance_file_path, save_image=True)
+    status = database.check_in(name, save_image=True)
     return render_template('result.html', status='Checked In Status For {} : {} '.format(name, status))
 
 
 @app.route('/checkout', methods=['POST'])
 def checkout():
     name = request.form.get("name")
-    # status = api_functions.check_out(
-    #     name, attendance_file_path, save_image=True)
-    status = database.check_out(name,save_image=True)
+    _ = api_functions.check_out(
+        name, attendance_file_path, save_image=True)
+    status = database.check_out(name, save_image=True)
     return render_template('result.html', status='Checked Out Status {} : {} '.format(name, status))
 
 
 @app.route('/confirm', methods=['POST'])
 def confirm():
     name = api_functions.gen_name()
-    if name == "Unknown": 
+    if name == "Unknown":
         return render_template('unknown.html', status="Unknown can't check in or check out")
     return render_template('mid.html', status='You are {} , Press Check In Check Out  '.format(name), name=name)
 
