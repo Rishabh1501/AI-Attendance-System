@@ -11,6 +11,8 @@ ngrok.exe
 attendance.zip
 Attendance/
 jupyter_test/
+mongodb-atlas-config.txt
+login_id.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

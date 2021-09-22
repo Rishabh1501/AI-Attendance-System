@@ -85,7 +85,7 @@ def confirm():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
 
 camera.release()
 cv2.destroyAllWindows()
