@@ -22,8 +22,8 @@ with open('config.json') as f:
     config_file = json.load(f)
 
 #creating database object
-database = DatabaseAPI(camera, "mongodb://localhost:27017/",
-                       "Attendance", config_file["saved_image_folder"])
+database = DatabaseAPI(camera, config_file["mongo_db_connection_url"],
+                       config_file["database_name"], config_file["saved_image_folder"])
 
 
 # making all the folders
