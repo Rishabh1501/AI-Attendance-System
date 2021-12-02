@@ -23,3 +23,5 @@ wincertstore==0.2
 pandas
 pymongo
 dnspython
+bcrypt
+plotly

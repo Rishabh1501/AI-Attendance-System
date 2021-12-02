@@ -13,6 +13,7 @@ Attendance/
 jupyter_test/
 mongodb-atlas-config.txt
 login_id.txt
+test
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -143,3 +144,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+static/js/main.js

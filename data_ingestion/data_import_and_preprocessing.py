@@ -7,57 +7,69 @@ from datetime import datetime
 
 
 class DataImport:
-    def make_folders(self,saved_image_folder=None,attendance_folder_path=None,image_folder=None):
-        
+    def make_folders(self,
+                     saved_image_folder=None,
+                     attendance_folder_path=None,
+                     image_folder=None):
+
         if not saved_image_folder:
             if "saved_images" not in os.listdir(os.getcwd()):
-                os.mkdir(os.path.join(os.getcwd(),"saved_images"))
+                os.mkdir(os.path.join(os.getcwd(), "saved_images"))
         else:
             if saved_image_folder not in os.listdir(os.getcwd()):
-                os.mkdir(os.path.join(os.getcwd(),saved_image_folder))
-        
-        
+                os.mkdir(os.path.join(os.getcwd(), saved_image_folder))
+
         if not attendance_folder_path:
             if "Attendance" not in os.listdir(os.getcwd()):
-                os.mkdir(os.path.join(os.getcwd(),"Attendance"))
-                self.attendance_folder_path = os.path.join(os.getcwd(),"Attendance")
+                os.mkdir(os.path.join(os.getcwd(), "Attendance"))
+                self.attendance_folder_path = os.path.join(
+                    os.getcwd(), "Attendance")
         else:
             if attendance_folder_path not in os.listdir(os.getcwd()):
-                os.mkdir(os.path.join(os.getcwd(),attendance_folder_path))
-            self.attendance_folder_path = os.path.join(os.getcwd(),attendance_folder_path)
-        
-        
+                os.mkdir(os.path.join(os.getcwd(), attendance_folder_path))
+            self.attendance_folder_path = os.path.join(os.getcwd(),
+                                                       attendance_folder_path)
+
         if not image_folder:
             if "images" not in os.listdir(os.getcwd()):
-                os.mkdir(os.path.join(os.getcwd(),"images"))
+                os.mkdir(os.path.join(os.getcwd(), "images"))
         else:
             if image_folder not in os.listdir(os.getcwd()):
-                os.mkdir(os.path.join(os.getcwd(),image_folder))
-
+                os.mkdir(os.path.join(os.getcwd(), image_folder))
 
     def make_csv_file(self):
         date = datetime.now().date()
-        attendance_file_path = os.path.join(
-            self.attendance_folder_path, "Attendance_" + str(date) + ".csv")
+        attendance_file_path = os.path.join(self.attendance_folder_path,
+                                            "Attendance_" + str(date) + ".csv")
         exists = os.path.isfile(attendance_file_path)
         if exists:
             print("Attendance File Present")
         else:
             try:
-                with open(attendance_file_path, 'a+'):
-                    data = {'Name': [], 'Time': [], 'Date': [],
-                            'Check In': [], 'Check Out': [], 'Check Out Time': []}
-                    df = pd.DataFrame(data, columns=[
-                        'Name', 'Time', 'Date', 'Check In', 'Check Out', 'Check Out Time'])  # create DataFrame
-                    df.set_index('Name', inplace=True)
-                    df.to_csv(attendance_file_path, sep=',', header=True)
+                with open(attendance_file_path, "a+"):
+                    data = {
+                        "Name": [],
+                        "Time": [],
+                        "Date": [],
+                        "Check In": [],
+                        "Check Out": [],
+                        "Check Out Time": []
+                    }
+                    df = pd.DataFrame(
+                        data,
+                        columns=[
+                            "Name", "Time", "Date", "Check In", "Check Out",
+                            "Check Out Time"
+                        ],
+                    )  # create DataFrame
+                    df.set_index("Name", inplace=True)
+                    df.to_csv(attendance_file_path, sep=",", header=True)
                     print("Attendance File Created")
             except Exception as e:
                 print("ERROR IN CREATING Attendance File!!!")
                 raise Exception(e)
         return attendance_file_path
-    
-    
+
     def read_images(self, path=None):
         if not path:
             path = "images"
@@ -75,7 +87,6 @@ class DataImport:
 
 
 class Preprocessing:
-
     def faceEncodings(self, images):
         encodeList = []
         for img in images:
@@ -83,5 +94,3 @@ class Preprocessing:
             encode = face_recognition.face_encodings(img)[0]
             encodeList.append(encode)
         return encodeList
-
-    
