@@ -48,13 +48,14 @@ month_name, month_data = None, None  #using global scope variables
 ############################# Login #############################
 @dashboard_app.route('/')
 def dashboard_index():
+    "Index Page of the application"
     global login_collection  #using the global scope variables
     login_collection = login_database[
         login_collection_name]  #fetching data from database
     if 'dash_username' in session:
         return redirect(url_for('dashboard_app.dashboard'))
 
-    return render_template('login/login-dashboard.html')
+    return render_template('login/login-dashboard.html', alert=False)
 
 
 @dashboard_app.route('/login', methods=['POST'])
@@ -72,11 +73,17 @@ def dashboard_login():
                         session['dash_username'] = login_user['Name']
                         session['email'] = login_user['Email']
                         session.permanent = True
-                        return redirect(url_for('dashboard_app.dashboard_index'))
+                        return redirect(
+                            url_for('dashboard_app.dashboard_index'))
                 else:
-                    return "Access Not Available!!"
-
-            return 'Invalid username/password combination'
+                    return render_template('login/login-dashboard.html',
+                                           alert=True,
+                                           alert_msg="Access Not Available!!")
+                    
+            return render_template(
+                'login/login-dashboard.html',
+                alert=True,
+                alert_msg="Invalid username/password combination")
     else:
         return "Invalid Request"
 

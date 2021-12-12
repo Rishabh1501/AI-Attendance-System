@@ -8,7 +8,7 @@ from datetime import timedelta
 
 # custom package imports
 from data_ingestion.data_import_and_preprocessing import DataImport, Preprocessing
-from attendance_api_functions.api_functions import API_Functions
+# from attendance_api_functions.api_functions import API_Functions
 from database_api_functions.db_api_functions import DatabaseAPI
 
 #dashboard app
@@ -33,15 +33,21 @@ preprocessing = Preprocessing()
 with open("config.json") as f:
     config_file = json.load(f)
 
-# creating database object
-database = DatabaseAPI(camera, config_file["mongo_db_connection_url"],
-                       config_file["attendance_database_name"],
-                       config_file["saved_image_folder"])
-
 # making all the folders
 data_import.make_folders(config_file["saved_image_folder"],
                          config_file["attendance_folder_path"],
                          config_file["image_path"])
+
+# calling important functions
+images, known_face_names = data_import.read_images(
+    image_path=config_file["image_path"])
+known_face_encodings = preprocessing.faceEncodings(images)
+
+# creating database object
+database = DatabaseAPI(camera, known_face_names, known_face_encodings,
+                       config_file["mongo_db_connection_url"],
+                       config_file["attendance_database_name"],
+                       config_file["saved_image_folder"])
 
 # creating collection
 database.make_database_collection()
@@ -50,12 +56,8 @@ database.make_database_collection()
 mongodb_url = config_file["mongo_db_connection_url"]
 client = pymongo.MongoClient(mongodb_url)
 
-# calling important functions
-images, known_face_names = data_import.read_images(
-    path=config_file["image_path"])
-known_face_encodings = preprocessing.faceEncodings(images)
-api_functions = API_Functions(camera, known_face_names, known_face_encodings,
-                              config_file["saved_image_folder"])
+# api_functions = API_Functions(camera, known_face_names, known_face_encodings,
+#                               config_file["saved_image_folder"])
 
 #login database
 login_collection_name = config_file[
@@ -73,7 +75,7 @@ def index():
     if 'username' in session:
         return redirect(url_for('home'))
 
-    return render_template('login/login.html')
+    return render_template('login/login.html', alert=False)
 
 
 @app.route('/login', methods=['POST'])
@@ -91,7 +93,10 @@ def login():
                     session.permanent = True
                     return redirect(url_for('index'))
 
-            return 'Invalid username/password combination'
+            return render_template(
+                'login/login.html',
+                alert=True,
+                alert_msg="Invalid username/password combination")
     else:
         return "Invalid Request"
 
@@ -149,7 +154,7 @@ def home():
 
 @app.route("/video_feed")
 def video_feed():
-    return Response(api_functions.gen_frames(),
+    return Response(database.gen_frames(),
                     mimetype="multipart/x-mixed-replace; boundary=frame")
 
 
@@ -180,7 +185,7 @@ def checkout():
 @app.route("/confirm", methods=["POST"])
 def confirm():
     if "username" in session:
-        name = api_functions.gen_name()
+        name = database.gen_name()
         if name != session["username"]:
             return render_template(
                 "attendance-templates//unknown.html",
@@ -193,16 +198,19 @@ def confirm():
 
     return redirect(url_for('index'))
 
+
 @app.route('/update')
 def update():
     if "username" in session:
         try:
-            return render_template('attendance-templates//update.html',alert=False)
+            return render_template('attendance-templates//update.html',
+                                   alert=False)
         except Exception as e:
             print(e)
     return redirect(url_for('index'))
 
-@app.route('/upload',methods=['POST'])
+
+@app.route('/upload', methods=['POST'])
 def upload():
     if "username" in session:
         try:
@@ -213,21 +221,26 @@ def upload():
                 images_list = os.listdir(config_file["image_path"])
                 for img in images_list:
                     if session["username"] == os.path.splitext(img)[0]:
-                        os.remove(os.path.join(config_file["image_path"],img))
+                        os.remove(os.path.join(config_file["image_path"], img))
                 #saving new image
-                path = os.path.join(config_file["image_path"],session["username"]+img_ext)
+                path = os.path.join(config_file["image_path"],
+                                    session["username"] + img_ext)
                 image.save(path)
-                global api_functions,images,known_face_names,known_face_encodings
+                global database, images, known_face_names, known_face_encodings
                 images, known_face_names = data_import.read_images()
                 known_face_encodings = preprocessing.faceEncodings(images)
-                api_functions = API_Functions(camera, known_face_names, known_face_encodings,
-                              config_file["saved_image_folder"])
-                return render_template("attendance-templates//update.html",alert=True)
-        
+                database = DatabaseAPI(camera, known_face_names,
+                                       known_face_encodings,
+                                       config_file["mongo_db_connection_url"],
+                                       config_file["attendance_database_name"],
+                                       config_file["saved_image_folder"])
+                return render_template("attendance-templates//update.html",
+                                       alert=True)
+
         except Exception as e:
             print(e)
-            raise(e)
-            
+            raise e
+
     return redirect(url_for('index'))
 
 

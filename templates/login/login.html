@@ -32,6 +32,12 @@
           <div class="mb-3 pb-1">
             <span class="h1 fw-bold mb-0">WELCOME BACK!</span>
           </div>
+          {% if alert %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{alert_msg}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endif %}
 
           <i class="fa fa-sign-in fa-2x me-3" aria-hidden="false"></i>
           <h5 class="fw-bold mb-3 pb-3" style="letter-spacing: 1px;">Login to your account</h5>

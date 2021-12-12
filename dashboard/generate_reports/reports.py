@@ -1,12 +1,12 @@
 import plotly.graph_objects as go
 
 class Graph_Plotly:
-
+    "Class to Create Graphs using the MongoDB Database"
     def __init__(self,database):
-        self.database = database
+        self.database = database #MongoDB Database object
 
     def create_graph(self):
-
+        "Function to create a HTML report Document using Plotly"
         data = self.database.list_collection_names()
         dates = [file.split('_')[1] for file in data]
         d = dict()
