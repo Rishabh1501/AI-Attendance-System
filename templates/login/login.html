@@ -14,23 +14,25 @@
 
   <title>Attendance System</title>
   <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+    }
+
     body {
-      background-color: powderblue;
+      /* max-height: 90vh; */
+      background-image: linear-gradient(0deg, #e3f2fdff, #bbdefbff, #90caf9ff, #64b5f6ff, #42a5f5ff, #2196f3ff, #1e88e5ff, #1976d2ff, #1565c0ff, #0d47a1ff);
     }
   </style>
 </head>
 
 <body>
   <section>
-    <div class="row d-flex mx-0" style="height: 100%;">
-      <div class="col-6 d-flex px-0" style="width: 55%;">
-        <img src="{{url_for('static',filename='html_images/login.jpg')}}" alt="Login image" width="100%" height="100%"
-          style="border-radius: 0px 25px 25px 0px;">
-      </div>
-      <div class="col-6 d-flex vh-100" style="width: 45%; height: 100%;">
+    <div class="row d-flex m-0 p-0" style="height: 100%;">
+      <div class="col-8 d-flex vh-100 m-0" style="width: 45%; height: 100%;">
         <div class="row offset-2 d-flex align-self-center">
           <div class="mb-3 pb-1">
-            <span class="h1 fw-bold mb-0">WELCOME BACK!</span>
+            <span class="h2 fw-bold mb-0" style="color: white;">Welcome User!</span>
           </div>
           {% if alert %}
           <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -40,7 +42,7 @@
           {% endif %}
 
           <i class="fa fa-sign-in fa-2x me-3" aria-hidden="false"></i>
-          <h5 class="fw-bold mb-3 pb-3" style="letter-spacing: 1px;">Login to your account</h5>
+          <h5 class="mb-3 pb-3" style="letter-spacing: 1px; color: white;">Login to your account</h5>
 
           <!-- Email input -->
           <form method=post action="/login" id="loginForm">
@@ -61,8 +63,12 @@
           </form>
         </div>
         <div class="d-flex justify-content-end align-self-start mx-2 my-2">
-          <a class="btn btn-dark btn-lg d-flex" href="/dash/" role="button" style="float: right;">Dashboard</a>
+          <a class="btn btn-dark btn-lg d-flex" href="/dash/" role="button" style="float: left;">Dashboard</a>
         </div>
+      </div>
+      <div class="col-4 d-flex p-0 m-0" style="width: 55%; height: 100%;">
+        <img src="{{url_for('static',filename='html_images/login.jpg')}}" alt="Login image"
+          style="height: 100vh; width: 100vw;border-radius: 25px 0px 0px 25px;">
       </div>
     </div>
   </section>
