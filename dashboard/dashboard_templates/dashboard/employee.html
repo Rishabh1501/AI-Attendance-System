@@ -10,7 +10,6 @@
             <span data-feather="Order"></span>
             Sort
         </button>
-
     </div>
 </div>
 <h2>INFO TABLE</h2>
@@ -27,7 +26,7 @@
         <tbody>
             {% for number,data in content %}
             <tr>
-                <td>{{number}}</td>
+                <td>{{number+1}}</td>
                 <td>{{data["Name"]}}</td>
                 <td>{{data["Time"]}}</td>
                 <td>{{data["Check Out Time"]}}</td>
