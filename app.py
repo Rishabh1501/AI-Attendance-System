@@ -214,7 +214,7 @@ def update():
 def upload():
     if "username" in session:
         try:
-            if request.files:
+            if request.files and "image" in request.files["image"].content_type:
                 image = request.files["image"]
                 img_ext = os.path.splitext(image.filename)[1]
                 #deleting previous image
@@ -237,7 +237,9 @@ def upload():
                                        config_file["saved_image_folder"])
                 return render_template("attendance-templates//update.html",
                                        alert=True)
-
+            else:
+                return render_template("attendance-templates//update.html",wrong_type=True)
+            
         except Exception as e:
             print(e)
             raise e
