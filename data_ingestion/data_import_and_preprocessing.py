@@ -77,13 +77,11 @@ class DataImport:
                         "Check Out": [],
                         "Check Out Time": []
                     }
-                    df = pd.DataFrame(
-                        data,
-                        columns=[
-                            "Name", "Time", "Date", "Check In", "Check Out",
-                            "Check Out Time"
-                        ],
-                    )  # create DataFrame
+                    df = pd.DataFrame(data,
+                                      columns=[
+                                          "Name", "Time", "Date", "Check In",
+                                          "Check Out", "Check Out Time"
+                                      ])  # create DataFrame
                     df.set_index("Name", inplace=True)
                     df.to_csv(attendance_file_path, sep=",", header=True)
                     print("Attendance File Created")
