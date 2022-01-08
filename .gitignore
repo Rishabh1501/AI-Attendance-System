@@ -14,6 +14,7 @@ jupyter_test/
 mongodb-atlas-config.txt
 login_id.txt
 test
+attendance_api_functions/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
