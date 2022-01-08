@@ -28,14 +28,14 @@
       {% for date in dates %}
       <tr>
         <td>{{date[0]+1}}</td>
-        <td><a style="color: black; font-family: 'Pushster', cursive; text-decoration: none;" href="/dash/dashboard/{{date[1]}}">{{date[1]}}</a></td>
+        <td><a style="color: black;font-family: 'Ubuntu', sans-serif;" href="/dash/dashboard/{{date[1]}}">{{date[1]}}</a></td>
       </tr>
       {% endfor %}
       {% else %}
       {% for date in dates %}
       <tr>
         <td>{{date[0]+1}}</td>
-        <td><a style="color: black; font-family: 'Pushster', cursive; text-decoration: none;" href="/dash/employee/{{date[1][1]}}">{{date[1][0]}}</a></td>
+        <td><a style="color: black; font-family: 'Ubuntu', sans-serif;" href="/dash/employee/{{date[1][1]}}">{{date[1][0]}}</a></td>
       </tr>
       {% endfor %}
       {% endif %}

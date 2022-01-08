@@ -227,7 +227,8 @@ def upload():
                                     session["username"] + img_ext)
                 image.save(path)
                 global database, images, known_face_names, known_face_encodings
-                images, known_face_names = data_import.read_images()
+                
+                images,known_face_names = data_import.read_images()
                 known_face_encodings = preprocessing.faceEncodings(images)
                 database = DatabaseAPI(camera, known_face_names,
                                        known_face_encodings,

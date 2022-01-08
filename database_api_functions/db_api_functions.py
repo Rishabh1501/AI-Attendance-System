@@ -15,7 +15,7 @@ class DatabaseAPI:
                  known_face_encodings: typing.List[np.ndarray],
                  mongo_db_url: str, database_name: str,
                  img_folder_path: typing.Union[str, bytes, os.PathLike]):
-        """Intiantiate the DatabaseAPI object
+        """Instantiate the DatabaseAPI object
 
         Parameters
         -----------
@@ -46,11 +46,12 @@ class DatabaseAPI:
                 )
             self.database = client[database_name]
         except pymongo.errors.ConnectionFailure as e:
-            print("Exception occured while making connection")
+            print("Exception occurred while making connection")
             raise Exception(e)  #raise an error if connection failes
 
     def make_database_collection(self, collection_name: str = None):
-        """Creates a collection in the MongoDB database. If name of collection is not specified, 'Attendance_<current_date>' is used as the collection name.
+        """Creates a collection in the MongoDB database. If the 
+           name of the collection is not specified, 'Attendance_<current_date>' is used as the collection name.
 
         Parameters
         -----------
@@ -65,7 +66,7 @@ class DatabaseAPI:
 
         else:
             print(
-                f"Collection:'{collection_name}' does not exists OR no documents are present in the collectionin Database"
+                f"Collection:'{collection_name}' does not exists OR no documents are present in the collection in Database"
             )
         self.collection = self.database[collection_name]
 
@@ -75,7 +76,7 @@ class DatabaseAPI:
         Parameters
         -----------
             - `name` (str): Name of the employee.
-            - `save_image` (bool, optional): Whether to take Snapshot of employee during check-in or not. Defaults to True.
+            - `save_image` (bool, optional): Whether to take a Snapshot of an employee during check-in or not. Defaults to True.
 
         Returns
         --------
@@ -87,8 +88,6 @@ class DatabaseAPI:
             tStr = time_now.strftime("%H:%M:%S")
             dStr = time_now.strftime("%d/%m/%Y")
             cin = 1
-            # df.loc[name] = [tStr, dStr, cin, None, None]
-            # df.to_csv(attendance_file_path, index_label='Name')
             record = {
                 "Name": name,
                 "Time": tStr,
@@ -128,7 +127,7 @@ class DatabaseAPI:
         Parameters
         -----------
             - `name` (str): Name of the employee.
-            - `save_image` (bool, optional): Whether to take Snapshot of employee during check-in or not. Defaults to True.
+            - `save_image` (bool, optional): hether to take a Snapshot of an employee during check-in or not. Defaults to True.
 
         Returns
         --------
@@ -148,7 +147,7 @@ class DatabaseAPI:
                     {
                         "$set": {
                             "Check Out": 1,
-                            "Check Out Time": time_now.strftime("%H:%M:%S"),
+                            "Check Out Time": time_now.strftime("%H:%M:%S")
                         }
                     },
                 )
@@ -165,13 +164,13 @@ class DatabaseAPI:
                       name: str,
                       check_status: str,
                       save_image: bool = True) -> None:
-        """Function to capture Snapshot of Employees.
+        """Function to capture Snapshots of Employees.
         
         Parameters
         -----------
             - `name` (str): Name of the employee.
             - `check_status` (str): Check-in or Check-out status of Employees.
-            - `save_image` (bool, optional): Whether to save the snapshot of employee or not. Defaults to True.
+            - `save_image` (bool, optional): Whether to save the snapshot of an employee or not. Defaults to True.
         
         """
         if self.img_folder_path and save_image:

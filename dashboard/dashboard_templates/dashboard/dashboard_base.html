@@ -11,7 +11,7 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pushster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@1,500&display=swap" rel="stylesheet">
     <title>Admin Dashboard</title>
     <style>
         table {
@@ -23,14 +23,17 @@
 <body>
     <header>
         <nav class="navbar navbar-dark sticky-top bg-dark p-0 shadow">
-            <span style="display: inline"><a class="navbar-brand px-3 justify-content-start" href="/dash/dashboard">Attendance Management System</a></span>
+            <span style="display: inline"><a class="navbar-brand px-3 justify-content-start"
+                    href="/dash/dashboard">Attendance Management System</a></span>
             <span class="nav-item w-50 p-2 justify-content-center">
-                <h3 style="color:white; text-align:center; margin:0;"><strong>Welcome {{session["dash_username"]}}</strong>
+                <h3 style="color:white; text-align:center; margin:0;"><strong>Welcome
+                        {{session["dash_username"]}}</strong>
                 </h3>
             </span>
             <div class="nav-item dropdown">
                 <a class="nav-link btn btn-sm btn-light dropdown-toggle dropdown-toggle-split m-2" href="#"
-                    id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:black; text-align:center;">
+                    id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                    style="color:black; text-align:center;">
                     <span class="visually-hidden">Toggle Dropdown</span>
                     Settings
                 </a>
