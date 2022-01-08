@@ -26,13 +26,14 @@
 
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark d-flex shadow">
-        
+
         <a class="navbar-brand col-md-3 col-lg-2 px-3" href="/">Attendance Management
             System</a>
-        
-            <h3 id="emp_name" style="color:white; text-align: center; margin:0;"><strong><u>Welcome {{session["username"]}}</u></strong>
-            </h3>
-        
+
+        <h3 id="emp_name" style="color:white; text-align: center; margin:0;"><strong><u>Welcome
+                    {{session["username"]}}</u></strong>
+        </h3>
+
         <div class="nav-item dropdown">
             <a class="nav-link btn btn-sm btn-light dropdown-toggle dropdown-toggle-split m-2" href="#"
                 id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -77,13 +78,13 @@
                                 name="confirm_new_password" required>
                             <label for="floatingPassword">Confirm Password</label>
                         </div>
-                        <button type="submit" v class="btn btn-info" id="updateform">Save Changes</button>
+                        <button type="submit" v class="btn btn-dark" id="updateform">Save Changes</button>
                     </form>
                 </div>
                 <!--Modal Footer-->
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

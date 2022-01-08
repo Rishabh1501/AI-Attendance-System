@@ -2,7 +2,7 @@
 {% block body %}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h1 class="h2">Dashboard</h1>
-  <div class="btn-toolbar mb-2 mb-md-0">
+  <!-- <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group me-2">
       <button type="button" class="btn btn-sm btn-outline-secondary">Filter</button>
     </div>
@@ -10,7 +10,7 @@
       <span data-feather="Order"></span>
       Sort
     </button>
-  </div>
+  </div> -->
 </div>
 
 <h2>INFO TABLE</h2>
@@ -28,14 +28,16 @@
       {% for date in dates %}
       <tr>
         <td>{{date[0]+1}}</td>
-        <td><a style="color: black;font-family: 'Ubuntu', sans-serif;" href="/dash/dashboard/{{date[1]}}">{{date[1]}}</a></td>
+        <td><a style="color: black;font-family: 'Ubuntu', sans-serif;"
+            href="/dash/dashboard/{{date[1]}}">{{date[1]}}</a></td>
       </tr>
       {% endfor %}
       {% else %}
       {% for date in dates %}
       <tr>
         <td>{{date[0]+1}}</td>
-        <td><a style="color: black; font-family: 'Ubuntu', sans-serif;" href="/dash/employee/{{date[1][1]}}">{{date[1][0]}}</a></td>
+        <td><a style="color: black; font-family: 'Ubuntu', sans-serif;"
+            href="/dash/employee/{{date[1][1]}}">{{date[1][0]}}</a></td>
       </tr>
       {% endfor %}
       {% endif %}
