@@ -112,7 +112,7 @@ class DatabaseAPI:
             if self.collection.find_one({"Name": name, "Check Out": 1}):
                 checkin_status = (
                     "You Already Checked Out at " +
-                    str(self.collection.find_one({"Name": name})["Time"]) +
+                    str(self.collection.find_one({"Name": name})["Check Out Time"]) +
                     " ! See You Tomorrow :)")
             elif self.collection.find_one({"Name": name, "Check In": 1}):
                 checkin_status = (
