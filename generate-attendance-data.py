@@ -33,7 +33,7 @@ dataBase = client[DB_NAME]
 #         collection.insert_one(record)
 #     print(end = "\n\n")
     
-no_of_days = 13
+no_of_days = 14
 year = 2022
 month = 1    
 
@@ -45,15 +45,25 @@ for i in range(1,no_of_days+1):
     name = random.sample(["Rishabh","Jaspreet","Kartik","Dheeraj","Usha","Sonia","Ramesh","Suresh","Priyanka","Pavani","Harry","Saniya","Anjali","Varun","Himanshu"],rand_num)
     for j in range(rand_num):
         check_in_time = datetime.datetime(year,month,i,9,0)+datetime.timedelta(minutes=random.randrange(60))
-        check_out_time = datetime.datetime(year,month,i,7,0)+datetime.timedelta(minutes=random.randrange(60))
-        record = {
-            'Name': name[j],
-             'Time': check_in_time.strftime("%H:%M:%S"),
-             'Date': date.strftime("%d/%m/%Y"),
-             "Check_In":1,
-             "Check Out":1,
-             "Check Out Time":check_out_time.strftime("%H:%M:%S")
-                 }
+        if i != 14:
+            check_out_time = datetime.datetime(year,month,i,7,0)+datetime.timedelta(minutes=random.randrange(60))
+            record = {
+                'Name': name[j],
+                'Time': check_in_time.strftime("%H:%M:%S"),
+                'Date': date.strftime("%d/%m/%Y"),
+                "Check_In":1,
+                "Check Out":1,
+                "Check Out Time":check_out_time.strftime("%H:%M:%S")
+                    }
+        else:
+            record = {
+                'Name': name[j],
+                'Time': check_in_time.strftime("%H:%M:%S"),
+                'Date': date.strftime("%d/%m/%Y"),
+                "Check_In":1,
+                "Check Out":0,
+                "Check Out Time":None
+                    }
         print(record)
         collection.insert_one(record)
     print(end = "\n\n")

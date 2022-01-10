@@ -175,6 +175,11 @@ class DatabaseAPI:
         """
         if self.img_folder_path and save_image:
             success, frame = self.camera.read()
+            punc = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
+            for s in name:
+                if s in punc:
+                    name = name.replace(s, "")
+
             path = f"{self.img_folder_path}//{name}"
             if name not in os.listdir(self.img_folder_path):
                 os.mkdir(path)
